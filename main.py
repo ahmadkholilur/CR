@@ -42,7 +42,7 @@ def run_bot():
         pesan_template = [line.strip() for line in file if line.strip()]
 
     random.shuffle(pesan_template)
-
+    berhasil_count = 0 
     for template in pesan_template:
         pesan = template.format(koin=kata_kunci)
         data = {
@@ -50,7 +50,15 @@ def run_bot():
             "message": pesan
         }
         response = requests.post(url, headers=headers, data=data)
-        print(response.text)
+        try:
+            hasil = response.json()
+            if hasil.get("success") == True:
+                berhasil_count += 1
+                print(f"\033[92m[BERHASIL] {berhasil_count} : {pesan}\033[0m")
+            else:
+                print("\033[91mGagal! Perbaharui COOKIE\033[0m")
+        except:
+            print("\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT \033[0m")
         time.sleep(waktu_jeda)
 
 def main():
