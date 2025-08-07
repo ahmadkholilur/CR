@@ -7,13 +7,13 @@ def isi_session():
     session = input("Masukkan sessionid (cookie) akun Indodax: ").strip()
     with open("cookie.txt", "w") as f:
         f.write(session)
-    print("Session berhasil disimpan ke cookie.txt\n")
+    print("\033[93m\n\nSession berhasil disimpan ke cookie.txt\n\033[0m")
 
 def isi_user_agent():
     user_agent = input("Masukkan User-Agent browser kamu: ").strip()
     with open("useragent.txt", "w", encoding="utf-8") as f:
         f.write(user_agent)
-    print("User-Agent berhasil disimpan ke useragent.txt\n")
+    print("\033[93m\n\nUser-Agent berhasil disimpan ke useragent.txt\n\033[0m")
 
 def run_bot():
     if not os.path.exists("cookie.txt"):
@@ -63,9 +63,9 @@ def run_bot():
 
 def main():
     while True:
-        print("\n=== MENU BOT CHATROOM INDODAX ===")
-        print("1. Isi session (cookie)")
-        print("2. Isi User-Agent(jika sudah abaikan)")
+        print("\033[94m\n*** MENU BOT CHATROOM INDODAX ***\033[0m")
+        print("1. Isi Cookie (perbaharui jika kadaluarsa)")
+        print("2. Isi User-Agent (jika sudah abaikan)")
         print("3. Run bot")
         print("4. Keluar")
         pilihan = input("Pilih menu (1/2/3/4): ").strip()
