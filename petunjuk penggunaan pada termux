@@ -2,6 +2,6 @@ pkg update && pkg upgrade
 pkg install python
 pkg install git
 pip install requests
-termux-setup-storage permisson storage
+termux-setup-storage (ijin akses penyimpanan)
 git clone https://github.com/ahmadkholilur/CR
-un-checklist set local in kiwi browser
+un-checklist pada local di kiwi browser
