@@ -36,7 +36,7 @@ def run_bot():
         "Cookie": cookie_value,
         "User-Agent": user_agent
     }
-    room_id = 1
+    # room_id = 1
 
     with open("pesan.txt", "r", encoding="utf-8") as file:
         pesan_template = [line.strip() for line in file if line.strip()]
@@ -46,7 +46,7 @@ def run_bot():
     for template in pesan_template:
         pesan = template.format(koin=kata_kunci)
         data = {
-            "room_id": room_id,
+            # "room_id": room_id,
             "message": pesan
         }
         response = requests.post(url, headers=headers, data=data)
