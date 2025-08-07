@@ -7,20 +7,20 @@ def isi_session():
     session = input("Masukkan sessionid (cookie) akun Indodax: ").strip()
     with open("cookie.txt", "w") as f:
         f.write(session)
-    print("\033[93m\n\nSession berhasil disimpan ke cookie.txt\n\033[0m")
+    print("\033[92m\n\nSession berhasil disimpan ke cookie.txt\n\033[0m")
 
 def isi_user_agent():
     user_agent = input("Masukkan User-Agent browser kamu: ").strip()
     with open("useragent.txt", "w", encoding="utf-8") as f:
         f.write(user_agent)
-    print("\033[93m\n\nUser-Agent berhasil disimpan ke useragent.txt\n\033[0m")
+    print("\033[92m\n\nUser-Agent berhasil disimpan ke useragent.txt\n\033[0m")
 
 def run_bot():
     if not os.path.exists("cookie.txt"):
-        print("\n[PERINGATAN] File cookie.txt belum ada. Silakan isi session dulu lewat menu 1.\n")
+        print("\033[93m\n[PERINGATAN] File cookie.txt belum ada. \nSilakan isi session dulu lewat menu 1.\n\033[0m")
         return
     if not os.path.exists("useragent.txt"):
-        print("\n[PERINGATAN] File useragent.txt belum ada. Silakan isi User-Agent dulu lewat menu 2.\n")
+        print("\033[93m\n[PERINGATAN] File useragent.txt belum ada. \nSilakan isi User-Agent dulu lewat menu 2.\n\033[0m")
         return
 
     with open("cookie.txt", "r") as f:
