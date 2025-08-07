@@ -1,7 +1,0 @@
-pkg update && pkg upgrade
-pkg install python
-pkg install git
-pip install requests
-termux-setup-storage (ijin akses penyimpanan)
-git clone https://github.com/ahmadkholilur/CR
-un-checklist pada local di kiwi browser
