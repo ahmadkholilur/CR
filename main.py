@@ -95,7 +95,7 @@ def run_bot():
                 print(f"\033[92m[BERHASIL] {berhasil_count} : {pesan}\033[0m")
             else:
                 gagal_total += 1
-                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total}{pesan})\033[0m")
+                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total})\033[0m")
         except:
             gagal_total += 1
             print(f"\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT (Total gagal: {gagal_total})\033[0m")
@@ -133,3 +133,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
