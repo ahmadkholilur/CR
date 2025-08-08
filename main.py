@@ -15,6 +15,19 @@ def isi_user_agent():
         f.write(user_agent)
     print("\033[92m\n\nUser-Agent berhasil disimpan ke useragent.txt\n\033[0m")
 
+def get_last_index():
+    if os.path.exists("last_index.txt"):
+        with open("last_index.txt", "r") as f:
+            try:
+                return int(f.read().strip())
+            except:
+                return 0
+    return 0
+
+def save_last_index(idx):
+    with open("last_index.txt", "w") as f:
+        f.write(str(idx))
+
 def run_bot():
     if not os.path.exists("cookie.txt"):
         print("\033[93m\n[PERINGATAN] File cookie.txt belum ada. \nSilakan isi session dulu lewat menu 1.\n\033[0m")
@@ -65,7 +78,10 @@ def run_bot():
     berhasil_count = 0 
     gagal_total = 0  # Counter total gagal
 
-    for template in pesan_template:
+    last_index = get_last_index()
+    print(f"\033[93mMulai dari baris ke-{last_index+1} pada pesan.txt\033[0m")
+
+    for idx, template in enumerate(pesan_template[last_index:], start=last_index):
         pesan = template.format(koin=kata_kunci)
         data = {
             "room_id": room_id,
@@ -79,14 +95,17 @@ def run_bot():
                 print(f"\033[92m[BERHASIL] {berhasil_count} : {pesan}\033[0m")
             else:
                 gagal_total += 1
-                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total})\033[0m")
+                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total}{pesan})\033[0m")
         except:
             gagal_total += 1
             print(f"\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT (Total gagal: {gagal_total})\033[0m")
         
+        save_last_index(idx + 1)  # Simpan index terakhir yang sudah dikirim
+
         if gagal_total >= 4:
             print("\033[91mTotal gagal sudah 4x, program dihentikan otomatis!\033[0m")
             break
+
         jeda = random.uniform(jeda_min, jeda_max)
         # print(f"Menunggu {jeda:.2f} detik sebelum mengirim pesan berikutnya...")
         time.sleep(jeda)
