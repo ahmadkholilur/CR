@@ -63,6 +63,8 @@ def run_bot():
         return
 
     berhasil_count = 0 
+    gagal_total = 0  # Counter total gagal
+
     for template in pesan_template:
         pesan = template.format(koin=kata_kunci)
         data = {
@@ -76,9 +78,15 @@ def run_bot():
                 berhasil_count += 1
                 print(f"\033[92m[BERHASIL] {berhasil_count} : {pesan}\033[0m")
             else:
-                print("\033[91mGagal! Perbaharui COOKIE\033[0m")
+                gagal_total += 1
+                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total})\033[0m")
         except:
-            print("\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT \033[0m")
+            gagal_total += 1
+            print(f"\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT (Total gagal: {gagal_total})\033[0m")
+        
+        if gagal_total >= 4:
+            print("\033[91mTotal gagal sudah 4x, program dihentikan otomatis!\033[0m")
+            break
         jeda = random.uniform(jeda_min, jeda_max)
         # print(f"Menunggu {jeda:.2f} detik sebelum mengirim pesan berikutnya...")
         time.sleep(jeda)
