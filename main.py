@@ -29,24 +29,44 @@ def run_bot():
         user_agent = f.read().strip()
 
     kata_kunci = input("Masukkan nama koin (misal: BTC, ETH, DOGE): ")
-    waktu_jeda = float(input("Masukkan waktu jeda antar pesan (dalam detik): "))
+
+    # Input jeda minimal dan maksimal dari user
+    while True:
+        try:
+            jeda_min = float(input("Masukkan jeda minimal antar pesan (detik): "))
+            jeda_max = float(input("Masukkan jeda maksimal antar pesan (detik): "))
+            if jeda_min > jeda_max:
+                print("Jeda minimal tidak boleh lebih besar dari jeda maksimal!")
+                continue
+            break
+        except ValueError:
+            print("Input harus berupa angka. Coba lagi.")
 
     url = "https://indodax.com/api/v2/chatroom/web/send_message"
     headers = {
         "Cookie": cookie_value,
-        "User-Agent": user_agent
+        "User-Agent": user_agent,
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Origin": "https://indodax.com",
+        "Referer": "https://indodax.com/market/BTCIDR",
+        "X-Requested-With": "XMLHttpRequest"
     }
-    # room_id = 1
+    room_id = 1
 
-    with open("pesan.txt", "r", encoding="utf-8") as file:
-        pesan_template = [line.strip() for line in file if line.strip()]
+    try:
+        with open("pesan.txt", "r", encoding="utf-8") as file:
+            pesan_template = [line.strip() for line in file if line.strip()]
+    except FileNotFoundError:
+        print("\033[91mFile pesan.txt tidak ditemukan!\033[0m")
+        return
 
-    random.shuffle(pesan_template)
     berhasil_count = 0 
     for template in pesan_template:
         pesan = template.format(koin=kata_kunci)
         data = {
-            # "room_id": room_id,
+            "room_id": room_id,
             "message": pesan
         }
         response = requests.post(url, headers=headers, data=data)
@@ -59,7 +79,9 @@ def run_bot():
                 print("\033[91mGagal! Perbaharui COOKIE\033[0m")
         except:
             print("\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT \033[0m")
-        time.sleep(waktu_jeda)
+        jeda = random.uniform(jeda_min, jeda_max)
+        # print(f"Menunggu {jeda:.2f} detik sebelum mengirim pesan berikutnya...")
+        time.sleep(jeda)
 
 def main():
     while True:
