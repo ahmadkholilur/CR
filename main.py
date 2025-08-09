@@ -77,6 +77,7 @@ def run_bot():
 
     berhasil_count = 0 
     gagal_total = 0  # Counter total gagal
+    no_response_count = 0  # Counter untuk "No response"
 
     last_index = get_last_index()
     print(f"\033[93mMulai dari baris ke-{last_index+1} pada pesan.txt\033[0m")
@@ -95,7 +96,15 @@ def run_bot():
                 print(f"\033[92m[BERHASIL] {berhasil_count} : {pesan}\033[0m")
             else:
                 gagal_total += 1
-                print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total})\033[0m")
+                # Cek jika pesan error "No response"
+                if hasil.get("message", "").lower() == "no response":
+                    no_response_count += 1
+                    print(f"\033[91mNo response ({no_response_count}x)\033[0m")
+                    if no_response_count >= 2:
+                        print("\033[91mMuncul 'No response' sebanyak 2x, program dihentikan otomatis!\033[0m")
+                        break
+                else:
+                    print(f"\033[91mGagal! Perbaharui COOKIE (Total gagal: {gagal_total}) {pesan}\033[0m")
         except:
             gagal_total += 1
             print(f"\033[91mGagal! Check kembali bagian COOKIE atau USER-AGENT (Total gagal: {gagal_total})\033[0m")
@@ -133,4 +142,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
